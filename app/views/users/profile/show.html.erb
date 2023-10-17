@@ -1,0 +1,162 @@
+<%= render "home/navbar" %>
+<h2>User Profile </h2></br>
+
+
+
+<p>First Name :  <%= @user.first_name %> </p>
+<p>Last Name :  <%= @user.last_name %> </p>
+<p> Contact No : 
+ <% if @user.contact_no? %> 
+	<%= @user.contact_no %> 
+<% else %>
+	not provided
+<% end %>
+
+</p>
+<p> Email : <%= @user.email %> </p>
+
+
+<%= link_to "Edit Profile",edit_user_registration_path, class: "btn btn-primary" %>
+</br>	
+
+
+<div class="container">
+<h3 class="text-center"> Appointments</h3>
+<div class="table-responsive ">
+
+	<table class="table table-striped table-hover table-bordered">
+		<% count = 0 %>
+		<%	current_user.roles.each do |role|  %>
+				<% if role.name != "user" %>
+					<% @user_role = role.name %>			
+				<% end %>
+		<% end %>
+		
+		<% if  @user_role != 'buyer' %>
+			
+				<thead class="table-primary">
+		    		<tr>
+				      <th scope="col">S.no</th>
+				      <th scope="col">User Email</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Phone Number</th>
+				      <th scope="col">Property</th>
+				      <th scope="col">Date</th>
+				      <th scope="col">Time</th>
+				      <th scope="col">Visit Status</th>
+				      <th scope="col">Status</th>
+				      <th scope="col">Status</th>
+		    		</tr>
+			  	</thead>
+		  		<tbody>
+		  			<% if @appointment.count != 0 %>
+		  			<% @appointment.each do |i| %>
+					<% count += 1%>
+					    <tr>
+					      <th scope="row"><%= count %></th>
+					      <td><%= User.find(i.user_id).email %></td>
+					      <td><%= i.name %></td>
+					      <td><%= i.phone	 %></td>
+					      <td><%= link_to  "#{Property.find(i.property_id).name}",user_property_path(current_user,i.property_id) %></td>
+					      <td><%= i.date.strftime('%a, %d-%m-%Y') %></td>
+					      <td><%= i.time.strftime("%I:%M %p") %></td>
+					      <td class="<%= i.visit_status == 'visited' ? 'text-success' : i.status == 'visit_pending' ? 'text-warning' : 'text-danger' %>">
+
+					      		<% if i.visit_status == 'visit_rejected' %>
+					      			Rejected
+					      		<% elsif i.visit_status == 'visit_pending' %>
+					      			Pending
+					      		<% else %>
+					      			Visited
+					      		<% end %>
+					    
+					      </td>
+					      <td class="<%= i.visit_status == 'visited' ? 'text-success' : i.status == 'visit_pending' ? 'text-warning' : 'text-danger' %>">
+					      		<% if i.status == 'rejected' %>
+					      			Rejected
+					      		<% elsif i.status == 'pending' %>
+					      			Pending
+					      		<% else %>
+					      			Approved
+					      		<% end %>
+					      </td>
+					      <td>
+					      	
+					      	<% if i.status == 'pending' || i.status == 'rejected' %>
+					      		<%= link_to "approve",update_appointment_status_path(i.id,:status => 1),data: { turbo_method: :put,turbo_confirm: 'Are you sure you want to approve the appointment?'},class: "btn btn-outline-primary" %> 
+					      	<% elsif  i.status == 'approved' %>
+					      		<% if i.visit_status != 'visited' %>
+					      		<%= link_to "reject",update_appointment_status_path(i.id,:status => 0),data: { turbo_method: :put,turbo_confirm: 'Are you sure you want to reject the appointment?'},class: "btn btn-outline-primary" %> 
+					      		<% end %>
+					      	<% end %>
+					      
+					      	<% if i.status == "approved" %>
+					      	<% if i.visit_status == 'visit_rejected' || i.visit_status == 'visit_pending' %>
+					      		<%= link_to 'Approve visit',update_appointment_status_path(i.id,:visit_status => 1),data: { turbo_method: :put,turbo_confirm: 'Are you sure you want to approve the visit?'},class: "btn btn-outline-success" %>
+
+					      	<% elsif i.visit_status == 'visited' %>
+					      		<%= link_to 'Reject visit',update_appointment_status_path(i.id,:visit_status => 2),data: { turbo_method: :put,turbo_confirm: 'Are you sure you want to reject the visit?'},class: "btn btn-outline-success" %>
+					      	<% end %>
+					      	<% end %>
+					      </td>
+					    </tr>
+					<% end %>
+					<% else %>
+						<p> No Appointments found</p>
+					<% end %>
+		  		</tbody>
+		  	
+		<% else %>
+				<thead class="table-primary">
+		    		<tr>
+				      <th scope="col">S.no</th>
+				      <th scope="col">Property</th>
+				      <th scope="col">Owner or Agent Mail</th>
+				      <th scope="col">Phone Number</th>
+				      <th scope="col">Date</th>
+				      <th scope="col">Time</th>
+				      <th scope="col">Status</th>
+				      <th scope="col">Action</th>
+		    		</tr>
+			  	</thead>
+		  		<tbody>
+		  			<% if current_user.appointments.count != 0 %>
+		  			<% current_user.appointments.each do |appointment| %>
+		  			<% count += 1%>
+					    <tr>
+					      <th scope="row"><%= count %></th>
+					      <td><%= link_to "#{Property.find(appointment.property_id).name}",rent_property_path(appointment.property_id) %></td>
+					      <td>
+					      	<%= link_to  "#{User.find(Property.find(appointment.property_id).user_id).email}",sub_admin_property_path(Property.find(appointment.property_id).user_id) %>
+					      </td>
+					      <td><%= appointment.phone	 %></td>
+					      
+						  <% time = Time.now %>
+						  <% time.to_fs(:time)%>
+						  
+					      <td><%= appointment.date.strftime('%a, %d-%m-%Y') %></td>
+					      <td><%= appointment.time.strftime("%I:%M %p") %></td>
+					      
+						  
+						  <td class="<%= appointment.status == 'approved' ? 'text-success' : appointment.status == 'pending' ? 'text-warning' : 'text-danger' %> " >
+						  <% if Date.current > appointment.date %>
+								<p class="text-secondary">appointment date passed</p>
+						  <% else %>
+						  		<%= appointment.status %>
+						  <% end %>
+						  </td>
+						  <td>
+						  	<%= link_to "delete","/appointment/#{appointment.id}", data:{ turbo_method: :delete,turbo_confirm: "Are you sure?" } %>
+						  </td>
+					    </tr>
+					<% end %>
+					<% end %>
+		  		</tbody>
+		 		
+		<% end %>
+
+	</table>
+</div>		
+</div>
+
+<%= render "home/footer" %>

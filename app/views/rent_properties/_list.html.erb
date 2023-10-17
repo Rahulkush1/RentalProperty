@@ -1,0 +1,62 @@
+<div class="">
+	<div>
+		<% @property.each do |property| %>
+		<div class="card mb-3 m-auto" style="max-width: 80rem;">
+  			<div class="row g-4">
+			
+    			<div class="col-md-4">
+
+      				<img src="<%= url_for(property.images[0]) %>" class="img-fluid rounded-start" alt="..." width="350">
+    			</div>
+    			<div class="col-md-8">
+      				<div class="card-body">
+        				<h5 class="card-title"><%= property.name %></h5>
+        				<p class="card-text"><%= property.prop_type %></p>
+        				<p class="card-text"><%= number_to_currency(property.price, :unit => "₹ ")%></p>
+        				<div class="d-flex ">
+    						<%= link_to "See Details",rent_property_path(property.id) ,class: "btn btn-primary me-3" %>
+    						<button type="button" id="modal_<%=property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  				Schedule Visit
+							</button>
+    			
+    					</div>
+
+        				
+      				</div>
+    			</div>
+  			
+  			</div>
+		</div>
+		<% end %>
+	</div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Schedule Appointment</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <% if user_signed_in? %>
+      <div class="modal-body">
+        <div class="form p-3">
+
+         
+        </div>
+      </div>
+      <% else %>
+        <p class="fs-4 text-info text-center">For Scheduling Visit you have to Login!</p>
+      <%= link_to "Please Login", new_user_session_path, class: "btn btn-outline-success w-50 m-auto" %>
+
+      <% end %>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>

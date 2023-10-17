@@ -1,0 +1,137 @@
+
+<div class="container mt-5">
+	<div class="form card p-5 w-50 m-auto shadow p-3 mb-5 bg-body-tertiary rounded">
+		<h1 class="text-center">Edit Properties</h1>
+		<%= form_for  [@user,@property]  do |f| %>
+		<div class="mb-3">			
+			<%= f.label :name, class: "form-label" %>
+			<%= f.text_field :name, class: "form-control" %>
+		</div>
+
+		<div class="mb-3">			
+			<%= f.label :price, class: "form-label" %>
+			<%= f.number_field :price, class: "form-control" %>
+		</div>
+
+		<div class="mb-3">
+			<%= f.label :prop_type, class: "form-label" %>	
+			<%= f.select :prop_type, Property.prop_types.keys ,selected: "Select",include_blank: false,disabled: Property.prop_types.keys[0] %>
+		</div>
+
+		<div>
+			<%= f.label :status, class: "form-label" %>	
+			<%= f.select :status, Property.statuses.keys,include_blank: false %>
+		</div>
+		<div class="mb-3">
+			<div class="flat_type" style="display: none;">
+				<%= f.label :flat_type, class: "form-label" %>
+				<%= f.select :flat_type, Property.flat_types.keys ,selected: "Select_Flat",include_blank: false,disabled: Property.flat_types.keys[0]  %>
+			</div>
+		</div>
+
+		<div class="mb-3 amenity-checkbox">
+			<%= fields_for :amenities do |amenity_form| %>
+			<%#= f.select(:amenities, Amenity.pluck(:title, :id),{ :prompt => "Please select"},
+                                   :multiple => true,include_hidden: false 
+                                 )%>
+
+				<%= f.collection_check_boxes :amenity_ids,Amenity.order(:title), :id,:title,include_blank: false %>
+			<% end %>
+		</div>
+
+		<div class="mb-3">	
+			<%= fields_for :address, @property.address do |add| %>
+
+				<%= add.label :address, class: "form-label" %>
+				<%= add.text_field :address, class: "form-control" %>
+
+				<%= add.label :street %>
+				<%= add.text_field :street, class: "form-control" %>
+
+				<%= add.label :city, class: "form-label" %>
+				<%= add.text_field :city, class: "form-control" %>
+
+				<%= add.label :country, class: "form-label" %>
+				<%= add.text_field :country, class: "form-control" %>
+			<% end %>	
+		</div>
+
+		<div class="mb-3">
+			<% if @property.images.attached? %>
+				<% @property.images.each do |image| %>
+					<img src="<%= url_for(image) %>", width="20" height="20" />
+				<% end %>
+			<% end %>
+			<%= f.label :images %>
+			<%= f.file_field :images , :multiple => true %>
+				
+		
+		</div>
+		<div class="mb-3 text-center d-flex justify-content-evenly">
+			<%= link_to "Cancel",user_properties_path,class: "btn btn-outline-primary form-control w-25 " %>
+			<%= f.submit "Update",class: "btn btn-outline-primary w-25 " %>
+		</div>
+		<% end %>
+	</div>
+	
+</div>
+
+
+
+<script type="text/javascript">
+	var myElement = document.querySelector('#property_prop_type');
+	function handle_change(e){
+	if (myElement.value == 'Flat'){
+		document.querySelector(".flat_type").style.display = "block"
+	}
+	else{
+		document.querySelector(".flat_type").style.display = "none"
+	}
+	}
+
+	myElement.addEventListener('change',()=>{
+		handle_change();
+	})
+
+		var ele = document.querySelector('#property_amenity_ids_6')
+	var label= document.querySelector('#property_amenity_ids_7').labels
+
+	var ele2 = document.querySelector('#property_amenity_ids_7')
+	var label2= document.querySelector('#property_amenity_ids_6').labels
+	console.log(label2[0].innerHTML )
+	function amenityHandle(e){
+		if(e.target.checked){
+			document.querySelector('#property_amenity_ids_7').style.display = "none";
+			label[0].innerHTML   = " "
+		}else{
+			document.querySelector('#property_amenity_ids_7').style.display = "inline";
+			label[0].innerHTML   = " Semi Furnished"
+			
+		}
+	}
+
+	function amenityHandle2(e){
+		console.log(e.target.checked)
+		if(e.target.checked){
+			document.querySelector('#property_amenity_ids_6').style.display = "none";
+			label2[0].innerHTML   = " "
+		}else{
+			document.querySelector('#property_amenity_ids_6').style.display = "inline";
+			label2[0].innerHTML   = " Full Furnished"
+			
+		}
+	}
+
+	ele.addEventListener('change',(e)=>{
+		amenityHandle(e);
+	})
+	ele2.addEventListener('change',(e)=>{
+		amenityHandle2(e);
+
+	})
+	document.querySelector('#property_prop_type').classList.add('form-select')
+	document.querySelector('#property_flat_type').classList.add('form-select')
+	document.querySelector('#property_status').classList.add('form-select')
+
+
+</script>

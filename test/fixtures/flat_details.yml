@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  area: MyString
+  flat_type: MyString
+  available_for: MyString
+
+two:
+  area: MyString
+  flat_type: MyString
+  available_for: MyString

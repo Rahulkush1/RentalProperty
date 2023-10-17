@@ -1,0 +1,204 @@
+<%= render "home/navbar" %>
+		
+<div class="">
+	<div class="row ">
+		<div class="col-lg-2 filter_border">
+			<div class="filter card border-0 my-3 mx-3 " style="width: 18rem">
+				<h4 class="card-title text-center my-2">Filters</h4>
+				<div class="card-body">
+					<form id="form" action="<% request.query_parameters %>" method="get" >
+						<div class="mb-3">
+							<label class="fs-5">Filter By Price or Name</label>
+					<!-- <select name="sort_option"    class="form-select" onchange="this.form.submit()">
+						<option value="" selected>Choose</option>
+						<optgroup label="Sort By Price">
+							<option value="low_to_high">Low To High</option>
+							<option value="high_to_low">High To low</option>
+						</optgroup>
+						<optgroup label="Sort By Name">
+							<option value="name">Name</option>
+						</optgroup>
+					</select> -->
+							<%= select_tag :sort_option,options_for_select([["Choose",""],["Low to High","low_to_high"],["High to Low","high_to_low"],["Name","name"]],request.params.merge[:sort_option]),{onchange: "this.form.submit()", class: "form-select"}  %>	
+				
+							<%#= number_field :min_price, placeholder: "min",class: "form-control mb-2" %>
+							<%#= number_field :max_price, placeholder: "max",class: "form-control mb-2" %>
+
+						</div>
+			 			<div class="mb-3">
+							<label class="fs-5">Filter By Status</label>
+					<!-- <select name="status"  class="form-select">
+						<option value="" selected>Choose</option>
+						<optgroup label="Filter By Status">
+							<option value="sold">Sold</option>
+						</optgroup>
+					</select> -->
+							<%= select_tag :status,options_for_select([["Choose",""],["Available","available"],["Sold","sold"],["Pending","pending"]],request.params.merge[:status]),{ onchange: "this.form.submit()", class: "form-select"} %>	
+						</div>
+						<div class="mb-3">
+
+							<label class="fs-5">Filter By Price</label>
+							<input type="text" id="min_price" name="min_price" placeholder="min" class="form-control mb-2">
+							<input type="text" id="max_price" name="max_price" placeholder="max" class="form-control" >
+							<input type="submit" class="btn btn-outline-success my-1">	
+						</div>
+
+						<div class="mb-3">
+							<label class="fs-5">Filter By Post</label>
+<!-- 					<select name="posted"  class="form-select">
+						<option value="" selected>Choose</option>
+						<option value="owner">Owner</option>
+						<option value="broker">Broker</option>
+					</select> -->
+							<%= select_tag :posted,options_for_select([["Choose",""],["Owner","owner"],["Broker","broker"]],request.params.merge[:posted]),{ onchange: "this.form.submit()", class: "form-select"} %>	
+						</div> 
+						<div class="mb-3">
+					<!-- <input type="submit" class="btn btn-outline-success mx-4"> -->
+		 					<%= link_to "Clear filter",request.params.clear, class: "btn btn-outline-success " %>
+		 				</div>
+
+					</form>
+				</div>
+		<%#= link_to "low to high",rent_properties_path(:sort => "low_to_high"), class: "btn btn-outline-success mx-2 pricelow_class" %> 	 
+		<%#= link_to "high to low", rent_properties_path(:sort => "high_to_low"), class: "btn btn-outline-success pricehigh_class" %> 
+		 <%#= link_to "sort by name",rent_properties_path(:name => "name"), class: "btn btn-outline-success me-1 name_class" %>
+		<%#= link_to "Sort by status",request.params.merge(:status => "sold") ,class: "btn btn-outline-success ms-1 " %>		
+			</div>
+		</div>
+		<div class="col-lg-10 scrollable">
+			<div class="card border-1 my-3" style="width: 94rem;">
+				<p class="fw-bold my-2 mx-3 ">Applied Filters 
+				<span class="text-secondary mx-3"> 
+					<% request.query_parameters.each do |key,value| %>
+						<% if value != "" %>
+							<% if key == 'min_price' || key == 'max_price' %>
+								<button class="btn btn-secondary"> 
+								<%= key == 'min_price' ? "Minimum Price" : "Maximum Price" %> 
+								<%= value %>	
+								</button>
+							<% else %>
+								<%= link_to "#{value}",request.query_parameters.delete(key),class: "btn btn-secondary"  %>
+							<% end %>
+						<% end %>
+					<% end %>
+				</span>
+				</p>
+			</div>
+			<h3 class="bg-secondary text-light text-center p-1">Property Count : <%= @property.count%> </h3>
+			<div class="d-flex justify-content-between"> 
+				<h2> All Properties</h2>
+				<div class="d-flex my-3 mx-4">
+					<button id="list" onclick="myFunction(this)" class="px-4  border-0">
+	 					<i class="fa fa-solid fa-list"></i>
+					</button>
+					<button id="grid" onclick="myFunction(this)" class="px-4 py-2 border-0">
+	 					<i class="fa fa-solid fa-table"></i>
+					</button>
+				</div>
+			</div>
+
+			<% if @property.count == 0 %>
+				<div class="text-center text-secondary fs-2"> Not Found ? </div>
+			<% end %>
+	<!-- <ul> -->
+			<div id="list_view">
+				<%= render :partial => "rent_properties/list", locals: {property: @property} %>	
+			</div>
+			<div id="grid_view" >
+				<%= render :partial => "rent_properties/grid", locals: {property: @property} %>	
+			</div>
+			<div class="text-center">
+				<%= paginate @property %>
+			</div>
+	
+
+
+				
+			
+			<!-- <li>
+				<p>Name: <%#= property.name %></p>
+				<p>Status: <%#= property.status %></p>
+				<p>Price: <%#= number_to_currency(property.price, :unit => "₹ ")	 %></p>
+				<p>Property Type: <%#= property.prop_type %></p>
+				<%# if property.flat_type != nil %>
+					<p>Flat Type: <%#= property.flat_type %></p>
+				<%# end %>
+				<p>Amenities : 
+					[<%# property.amenities.each do |amenity| %>
+						<%#= amenity.title %>,
+					 <%# end %>]
+				</p>
+				<p>Address : </br>
+					Line 1 : <%#= property.address.address %></br>
+					Street : <%#= property.address.street %></br>
+					City : <%#= property.address.city %></br>
+					Country : <%#= property.address.country %></br>
+				</p>
+				<p> Posted by : <%#	User.find(property.user_id).roles.each do |role|  %>
+						<%# if role.name != "user" %>
+							<%#= role.name %> 
+						<%# end %>
+					<%# end %>
+
+				</p>
+				<%#= link_to "See Details",rent_property_path(property.id) %>
+			
+			</li> -->
+		
+	<!-- </ul> -->
+
+		</div>
+	</div>
+</div>		
+
+
+
+
+<script type="text/javascript">
+var list = document.querySelector('#list')
+var grid = document.querySelector('#grid')
+var list_view = document.querySelector('#list_view')
+var grid_view = document.querySelector('#grid_view')
+list_view.style.display = 'none'
+grid.classList.add('bg-primary');
+list.style.color = "black"
+grid.style.color = "white"
+
+console.log(list.classList)
+
+// grid_view.style.display = 'block'
+function myFunction(e){
+
+
+
+if(e.id === "list"){
+
+	list.classList.add('bg-primary');
+	grid.classList.add('color_for_view');
+	grid.style.color = "black"
+	list.style.color = "white"
+	grid_view.style.display = "none";
+	list_view.style.display = "block";
+	list.classList.remove('color_for_view');
+	grid.classList.remove('bg-primary');
+	console.log('list ')
+}else{
+	list.classList.add('color_for_view');
+	grid.classList.add('bg-primary');
+
+	list.style.color = "black"
+	grid.style.color = "white"
+
+	list_view.style.display = 'none';
+	grid_view.style.display = "block";
+	list.classList.remove('bg-primary');
+	grid.classList.remove('color_for_view');
+	console.log('grid ')
+
+}
+}
+</script>
+<%= render "home/footer" %>
+
+
+

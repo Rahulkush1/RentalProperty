@@ -1,0 +1,48 @@
+<%  @user.roles.each do |role| %>
+	<% if role.name != "user" %>
+			<% @sub_user = role.name.capitalize %>
+	<% end %>
+<% end %>
+
+<h3>
+	<%= @sub_user %>
+	Details
+</h3>
+
+<p> Name :  <%= @user.first_name %> <%= @user.last_name %> </p>
+
+
+
+<p> Rating : 4.0 </p>
+<p> Reviews : Good condition flat </p>
+
+<h4>Properties </h4>
+
+<ul>
+<% @properties.each do |property| %>
+	<li>
+		<p>Property Name :  <%= property.name %></p>
+		<p>Property Status : <%= property.status %></p>
+		<p>Property Type :  <%= property.prop_type %></p>
+		<p> <%= property.flat_type %></p>
+		<% if property.flat_type != nil %>
+			<p>Flat Type: <%= property.flat_type %></p>
+		<% end %>
+		<p>Amenities : 
+			[<% property.amenities.each do |amenity| %>
+				<%= amenity.title %>,
+			<% end %>]
+		</p>
+		<p>Address : 
+						<%= property.address.address %>
+						<%= property.address.street	 %>
+						<%= property.address.city %>
+						<%= property.address.country %>
+
+		</p>
+
+	</li>
+<% end %>
+</ul>
+
+

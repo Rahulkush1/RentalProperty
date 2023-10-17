@@ -1,0 +1,184 @@
+
+<%= render "home/navbar" %>
+
+<div class="container ">
+	<div class="my-3">
+		<div class="swiper mySwiper">
+    		<div class="swiper-wrapper">
+    			<% @property.images.each do |image| %>
+      				<div class="swiper-slide"> <img src="<%= url_for(image) %>" class="img-fluid slider-img" > </div>
+      			<% end %>
+    		</div>
+    		<div class="swiper-button-next"></div>
+    		<div class="swiper-button-prev"></div>
+    		<div class="swiper-pagination"></div>
+    		<div class="autoplay-progress">
+      			<svg viewBox="0 0 48 48">
+        			<circle cx="24" cy="24" r="20"></circle>
+      			</svg>
+      			<span></span>
+    		</div>
+  		</div>
+
+	</div>
+	<div>
+		<div class="mb-3"><span class="fs-3"><%= @property.name %></span> 
+			<small class="text-secondary"> in 
+						<%= @property.address.street %>,
+						<%= @property.address.city %>,
+						<%= @property.address.country %>
+					
+			</small> 
+		</div>
+		<div class="mb-3">
+			<h4> <%= number_to_currency(@property.price, :unit => '₹ ') %> </h4>
+		</div>
+		<div class="mb-3">
+			<h4>Amenities Provided</h4>
+			<div class="card border-0" style="max-width: 40rem;">
+				<div class="card-body">
+					<div class="row m-auto">
+					<% @property.amenities.each do |amenity| %>
+					
+						<div class="col-lg-6">
+							<p>
+								<% if amenity.title == "Garden" %>
+									<img src="/garden.png" class="img-fluid me-2" width="25">
+									<%= amenity.title %>
+								<% end %>
+								<% if amenity.title == "Parking Space" %>
+									<img src="/parking-lot.png" class="img-fluid me-2" width="25">
+									<%= amenity.title %>
+								<% end %>
+								<% if amenity.title == "Fitness Facility" %>
+									<img src="/fitness.png" class="img-fluid me-2"  width="25">
+									<%= amenity.title %>
+								<% end %>
+								<% if amenity.title == "Wifi" %>
+									<img src="/wifi.png" class="img-fluid me-2" width="25">
+									<%= amenity.title %>
+								<% end %>
+								<% if amenity.title == "Swimming Pool" %>
+									<img src="/swimming-pool.png" class="img-fluid me-2" width="25">
+									<%= amenity.title %>
+								<% end %>
+								<% if amenity.title == "Full Furnished" || amenity.title == "Semi Furnished" %>
+
+									<img src="/furniture.png" class="img-fluid me-2" width="25">
+									<%= amenity.title %>
+								<% end %>
+							</p>
+						</div>
+						
+					<% end %>
+					</div>
+						
+					
+				</div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<span class="fs-4">Property Type : </span>
+			<span class="properties_content"> <%= @property.prop_type %> </span>
+		</div>
+		<div class="mb-3">
+			<h4>Configuration </h4>
+			<div class="card" style="max-width: 40rem;">
+				<div class="card-body"></div>
+			</div>
+		</div>
+		<div class="mb-3">
+			<span class="fs-4">Area</span>
+			<small class="text-secondary">in sq.ft</small> 
+		</div>
+		<div class="mb-3">
+			<h4>Available for</h4>
+		</div>
+		<div class="mb-3">
+			<h4>Address</h4>
+			<span class="properties_content"> <%= @property.address.address %> </span>
+			<span class="properties_content"><%= @property.address.street %> </span> 
+			<span class="properties_content"> <%= @property.address.city %> </span>
+			<span class="properties_content"> <%= @property.address.country %> </span>	
+		</div>
+		<div class="mb-3">
+			<span class="fs-4">Posted By : </span>
+			<span> 
+				<%	User.find(@property.user_id).roles.each do |role|  %>
+					<% if role.name != "user" %>
+						<% @user_role = role.name %>
+						<%= link_to "#{role.name}" ,sub_admin_property_path(@property.user_id),class: "properties_content text-decoration-none" %>	
+					<% end %>
+				<% end %>
+			</span>
+		</div>
+		<div class="mb-3">
+			<span class="fs-4">Posted on : </span>
+			<span> 
+				<% if Date.current().strftime("%d/%m/%Y") == @property.created_at.strftime("%d/%m/%Y") %>
+					Today
+				<% else %>
+					<%= @property.created_at.strftime("%d/%m/%Y") %>
+				<% end %>
+			</span>
+		</div>
+		<div class="mb-3 d-flex justify-content-center ">
+			<% if user_signed_in? %>
+			<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
+		
+			<% if appointment != nil %>
+				<% if appointment.visit_status == 'visited' %>
+					<%= link_to "Advance Book ","",class: "btn btn-outline-primary" %>
+				<% else %>
+			<% end %>
+					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Schedule Visit
+					</button>
+				<% end %>
+			<% else %>
+					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Schedule Visit
+					</button>
+			<% end %>
+
+		<!-- 	<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				Schedule Visit
+			</button> -->
+
+			<%# end %>
+			<%= link_to " Contact #{@user_role}",sub_admin_property_path(@property.user_id) ,class: "btn btn-outline-success btn-lg mx-3" %>
+
+		</div>
+	</div>
+</div>
+	
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Schedule Appointment</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <% if user_signed_in? %>
+      <div class="modal-body">
+        <div class="form p-3">
+
+         
+        </div>
+      </div>
+      <% else %>
+        <p class="fs-4 text-info text-center">For Scheduling Visit you have to Login!</p>
+      <%= link_to "Please Login", new_user_session_path, class: "btn btn-outline-success w-50 m-auto" %>
+
+      <% end %>      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "home/footer" %>
+
+

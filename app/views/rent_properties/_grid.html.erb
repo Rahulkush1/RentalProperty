@@ -1,0 +1,9 @@
+
+<div class="row g-4"> 
+	<% property.each do |prop| %>
+	<div class="col-lg-3 ">
+		<%= render :partial => "home/card", locals: {property: prop} %>
+	</div>
+	<% end %>
+	
+</div>

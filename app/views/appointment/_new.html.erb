@@ -1,0 +1,28 @@
+
+<%= form_with url: "/appointment/create", class: 'appointment_form' do |f| %>
+            
+            <div class="mb-3">
+              <%= f.hidden_field :property_id,value: "", class: "form-control ", id: "appointment_property_id" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :name, class: "form-label" %>
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :phone, class: "form-label" %>
+              <%= f.number_field :phone, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :date, class: "form-label" %>
+              <%= f.date_field :date,:min => Date.today,:max => 1.month.from_now , class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :time, class: "form-label" %>
+              <%= f.time_select :time, class: "form-control", :ampm => true,start_hour: 10, end_hour: 18 %>
+            </div>
+            
+            <div class="mb-3 text-center">
+              <%= f.submit "Submit", class: "btn btn-outline-primary btn-lg" %>
+            </div>
+
+<% end %>

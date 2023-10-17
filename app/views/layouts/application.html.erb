@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rentalproperty</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+ 
+    <%#= stylesheet_link_tag "https://fonts.googleapis.com", "data-turbo-track": "reload" %>
+
+    <%#= stylesheet_link_tag "https://fonts.gstatic.com", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  
+   
+  
+    <%#= javascript_pack_tag "application", 'data-turbo-track': 'reload' %>
+    <%= javascript_importmap_tags %>
+    <%#= javascript_pack_tag "application", 'data-turbo-track': 'reload' %>
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+  </head>
+
+  <body>
+    
+
+    <%= yield %>
+    <%= notice %>
+    <%= alert %>
+  </body>
+  <script type="text/javascript">
+
+    
+  var modal = document.querySelector('.apppointment_modal')
+  // console.log(modal) 
+
+  function modal_click(e){
+    
+    
+    value = e.id
+    length = value.length
+    id = value.split('_')[1]
+    document.querySelector('.modal-body').innerHTML = "<%= escape_javascript render :partial => "appointment/new" %>"
+    
+    var property_id = document.querySelector('#appointment_property_id')
+    property_id.value = `${id}`
+
+   
+
+   
+  }
+
+    $(document).ready(function(){
+
+      var swiper = new Swiper('.swiper', {
+      slidesPerView: 3,
+      direction: getDirection(),
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      on: {
+        resize: function () {
+          swiper.changeDirection(getDirection());
+        },
+      },
+    });
+
+    function getDirection() {
+      var windowWidth = window.innerWidth;
+      var direction = window.innerWidth <= 760 ? 'vertical' : 'horizontal';
+
+      return direction;
+    }
+
+    const progressCircle = document.querySelector(".autoplay-progress svg");
+    const progressContent = document.querySelector(".autoplay-progress span");
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      on: {
+        autoplayTimeLeft(s, time, progress) {
+          if(progress >=0){
+          progressCircle.style.setProperty("--progress", 1 - progress);
+          
+           progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+          }
+        }
+      }
+    });
+ 
+    });
+
+  </script>
+</html>

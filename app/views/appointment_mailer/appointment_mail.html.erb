@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @appointment.name %>,</h1>
+    <% property_id = Property.find(@appointment.property_id) %>
+    <% property_user = User.find(property_id.user_id) %>
+    <p>
+      Your upcoming appointment with <%= property_user.first_name %> <%= property_user.last_name %> is on <%= @appointment.date.strftime('%a, %dth %b %Y') %> at <%= @appointment.time.strftime('%I:%M')
+ %>.
+    </p>
+  
+
+    <p>
+      If you are unable to come to this appointment, please contact our office as soon as possible to reschedule. We look forward to seeing you!
+    </p>
+    <p>Thanks for scheduling and have a great day!</p>
+    <p> 
+      Sincerely,</br>
+
+      RentalProperty</br>
+
+      rentalproperty@gmail.com</br>
+
+      +919875588984</br>
+    </p>
+  </body>
+</html>
+
+ 
+
+
+
+
+
+
+

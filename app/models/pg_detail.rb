@@ -1,0 +1,2 @@
+class PgDetail < ApplicationRecord
+end
