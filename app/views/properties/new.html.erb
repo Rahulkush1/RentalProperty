@@ -7,7 +7,7 @@
 	<h1>Add Properties</h1>
 
 
-	<%= form_for [@user,@user.properties.build] do |f| %>
+	<%= form_for [@user,@property] do |f| %>
 		<div class="mb-3">
 			<%= f.label :name , class: "form-label" %>
 			<%= f.text_field :name, class: "form-control" %>
@@ -26,15 +26,15 @@
 		<div class="mb-3">
 			<div class="flat_type" style="display: none;">
 				
-				<%= fields_for :flat_details do |flat_detail| %>
-					<%= f.label :flat_type, class: "form-label"  %>
-					<%= f.select :flat_type, FlatDetail.flat_types.keys ,selected: "Select",include_blank: false,disabled: FlatDetail.flat_types.keys[0]  %>	
+				<%= f.fields_for :flat_details do |flat_detail| %>
+					<%= flat_detail.label :flat_type, class: "form-label"  %>
+					<%= flat_detail.select :flat_type, FlatDetail.flat_types.keys ,selected: "Select",include_blank: false,disabled: FlatDetail.flat_types.keys[0]  %>	
 			</div>
 		</div>
 		<div class="mb-3">
-			<div class="flat_type" style="display: none;" >
-					<%= f.label :available_for, class: "form-label"  %>
-					<%= f.select :available_for, ["Family","Bachelor","Student"],selected: "Select",include_blank: false  %>
+			<div class="flat_available_for" style="display: none;" >
+					<%= flat_detail.label :available_for, class: "form-label"  %>
+					<%= flat_detail.select :available_for, ["Family","Bachelor","Student"],selected: "Select",include_blank: false  %>
 				<% end %>
 			</div>
 		</div>
@@ -52,7 +52,7 @@
 
 		<div class="mb-3">
 			<h4>Address</h4>
-			<%= fields_for :address, @property.address do |add| %>
+			<%= f.fields_for :address, @property.build_address	 do |add| %>
 
 			<%= add.label :address, class: "form-label" %>
 			<%= add.text_field :address, class: "form-control" %>

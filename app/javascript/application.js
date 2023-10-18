@@ -16,14 +16,15 @@ var myElement = document.querySelector('#property_prop_type');
 function handle_change(e){
 	console.log(myElement)
 
-if (myElement.value == 'Flat'){
-	console.log(document.querySelectorAll(".flat_type"))
-	
-	document.querySelectorAll(".flat_type").style.display = "block"
+if (myElement.value == 'Flat'){	
+	document.querySelector(".flat_type").style.display = "block"
+	document.querySelector(".flat_available_for").style.display = "block"
 
 }
 else{
-	document.querySelectorAll(".flat_type").style.display = "none"
+	document.querySelector(".flat_type").style.display = "none"
+	document.querySelector(".flat_available_for").style.display = "none"
+
 }
 }
 

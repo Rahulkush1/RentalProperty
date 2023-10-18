@@ -30,6 +30,7 @@ class Api::V1::PropertiesController < ApplicationController
 	end
 
 	def create 
+		binding.pry
 		@property = current_user.properties.new(property_params)
 		if @property.save!
 			render json: {data: @property,flat_details: @property.flat_details,amenities: @property.amenities,address: @property.address,message: "property created successfully"}, status: :created

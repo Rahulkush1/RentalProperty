@@ -6,6 +6,4 @@ class FlatDetail < ApplicationRecord
 	    Two_BHK: 1,
 	    Three_BHK: 2
   	}
-
-
 end

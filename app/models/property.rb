@@ -5,7 +5,7 @@ class Property < ApplicationRecord
 	belongs_to :user
 	has_many_attached :images
 	has_many :flat_details, dependent: :destroy
-	accepts_nested_attributes_for :flat_details
+	accepts_nested_attributes_for :flat_details, allow_destroy: true
 	accepts_nested_attributes_for :amenities, allow_destroy: true
 	accepts_nested_attributes_for :address, allow_destroy: true
 
@@ -32,11 +32,13 @@ class Property < ApplicationRecord
 
 
   	def self.ransackable_attributes(auth_object = nil)
-    	["created_at", "flat_type", "id", "name", "price", "prop_type", "publish", "status", "updated_at", "user_id"]
+    	["blob_id", "created_at", "id", "name", "record_id", "record_type","created_at", "flat_type", "id", "name", "price", "prop_type", "publish", "status", "updated_at", "user_id"]
   	end
 
   	def self.ransackable_associations(auth_object = nil)
     	["address", "amenities", "images_attachments", "images_blobs", "roles", "user"]
   	end
+
+
 
 end

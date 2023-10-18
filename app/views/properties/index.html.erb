@@ -36,8 +36,8 @@
       <td><%= property.name %></td>
       <td ><%= number_to_currency(property.price,:unit => "₹ ") %></td>
       <td ><%= property.prop_type %></td>
-      <% if property.flat_type %>
-      	<td ><%= property.flat_type %></td>
+      <% if property.flat_details %>
+      	<td ><%= property.flat_details %></td>
       <% else %>
       	<td > NA </td>
       <% end %>
