@@ -30,10 +30,10 @@ class Api::V1::PropertiesController < ApplicationController
 	end
 
 	def create 
-		binding.pry
+
 		@property = current_user.properties.new(property_params)
 		if @property.save!
-			render json: {data: @property,flat_details: @property.flat_details,amenities: @property.amenities,address: @property.address,message: "property created successfully"}, status: :created
+			render json: {data: @property,flat_detail: @property.flat_detail,amenities: @property.amenities,address: @property.address,message: "property created successfully"}, status: :created
 		else
 			render json:{error: "Something went wrong!"}
 		end
@@ -82,7 +82,8 @@ class Api::V1::PropertiesController < ApplicationController
 
 	protected
 
-	def property_params		
-		params.require(:property).permit(:name, :price,:status, :publish, flat_details_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country])
+	def property_params	
+			binding.pry	
+		params.require(:property).permit(:name, :price,:status, :publish, flat_detail_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country])
 	end
 end

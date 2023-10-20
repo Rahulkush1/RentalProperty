@@ -1,5 +1,5 @@
 class FlatDetail < ApplicationRecord
-	belongs_to :property, inverse_of: :flat_details
+	belongs_to :property, inverse_of: :flat_detail
   	enum flat_type: {
   		Select: -1,
 	    BHK: 0,

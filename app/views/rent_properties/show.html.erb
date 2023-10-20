@@ -124,22 +124,22 @@
 		</div>
 		<div class="mb-3 d-flex justify-content-center ">
 			<% if user_signed_in? %>
-			<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
-		
-			<% if appointment != nil %>
-				<% if appointment.visit_status == 'visited' %>
-					<%= link_to "Advance Book ","",class: "btn btn-outline-primary" %>
+				<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
+				<% if appointment != nil %>
+					<% if appointment.visit_status == 'visited' %>
+						<%= link_to "Advance Book ","",class: "btn btn-outline-primary" %>
+					<% end %>
 				<% else %>
-			<% end %>
 					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Schedule Visit
 					</button>
 				<% end %>
-			<% else %>
-					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			<% end %>
+<!-- 			<%# else %>
+					<button type="button" id="modal_<%#= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Schedule Visit
 					</button>
-			<% end %>
+			<%# end %> -->
 
 		<!-- 	<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Schedule Visit

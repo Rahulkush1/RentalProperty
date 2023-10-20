@@ -10,7 +10,6 @@ import "bootstrap"
 
 
 
-
 var myElement = document.querySelector('#property_prop_type');
 
 function handle_change(e){

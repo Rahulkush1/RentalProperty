@@ -68,9 +68,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-
 end
-
 gem 'activeadmin'
 gem 'devise'
 gem 'pry'
@@ -83,5 +81,6 @@ gem "image_processing", ">= 1.2"
 gem "font-awesome-sass", "~> 6.4.2"
 gem "font-awesome-rails"
 gem 'kaminari'
+gem 'stripe'
 
 

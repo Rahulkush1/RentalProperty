@@ -1,18 +1,20 @@
-class AppointmentController < ApplicationController
+class Api::V1::AppointmentController < ApplicationController
   def new 
     @user = User.find(params[:user_id])
-    @appointment = Appointment.new
+    @appointment = @user.appointments.build
   end
 
   def index
-  	@appointment = current_user.appointments.find(params[:id])
+  	@appointment = current_user.appointments
   	render json: {data: @appointment}
   end
 
   def create 
-    @appointment = current_user.appointments.new(appointment_params)
+    binding.pry
+    @user = User.find(params[:user_id])
+    @appointment =  @user.appointments.new(appointment_params)
     if @appointment.save
-      AppointmentMailer.appointment_mail(@appointment).deliver_now
+      # AppointmentMailer.appointment_mail(@appointment).deliver_now
       render json:{data: @appointment, message: "Appointment created successfully"}
     else
       render json:{error: "Something went wrong"}
@@ -26,27 +28,27 @@ class AppointmentController < ApplicationController
       if @appointment.update({"status" => params[:status].to_i})
         render json: {data: @appointment.status,message: "status updated successfully"}
       else
-        render json:{error: "Something went wrong",status: :unprocessable_entity}
+        render json:{error: "Something went wrong"},status: :unprocessable_entity
       end
     else
       if @appointment.update({"visit_status" => params[:visit_status].to_i})
         render json: {data: @appointment.visit_status,message: "visit status updated successfully"}
       else
-        render json:{error: "Something went wrong",status: :unprocessable_entity}
+        render json:{error: "Something went wrong"},status: :unprocessable_entity
       end
     end
 
   end
 
   def destroy
-    @user = current_user
+    @user = User.find(params[:user_id])
     @appointment = @user.appointments.find(params[:id])
     @appointment.destroy
-    render json: {message: "deleted successfully", status: :see_other}
+    render json: {message: "deleted successfully"},status: :see_other
   end
 
   protected
   def appointment_params
-    params.permit(:name, :phone, :date, :time, :property_id)
+    params.require(:appointment).permit(:name, :phone, :date, :time, :property_id)
   end
 end

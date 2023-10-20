@@ -27,7 +27,9 @@
 			</div>
 			<div class="mb-3">
 				<% if @property.prop_type != 'Flat' %>
-					<p>Name : <%= @property.flat_details %></p>
+					<% if @property.flat_detail.present? %>
+						<p>Name : <%= @property.flat_detail.flat_type %></p>
+					<% end %>
 				<% end %>
 				<p class="fs-3">Amenities : 
 					<ul>

@@ -36,12 +36,13 @@
       <td><%= property.name %></td>
       <td ><%= number_to_currency(property.price,:unit => "₹ ") %></td>
       <td ><%= property.prop_type %></td>
-      <% if property.flat_details %>
-      	<td ><%= property.flat_details %></td>
+      <% if property.prop_type == 'Flat' %>
+        <% if property.flat_detail.present? %>
+        	<td ><%= property.flat_detail.flat_type %></td>
+        <% end %>
       <% else %>
-      	<td > NA </td>
+        <td > NA </td>
       <% end %>
-
       <td class="<%= property.status == "available" ? 'text-success': 'text-danger' %>"> <%= property.status %></td>
       <td class=" <%= property.publish == "YES" ? 'text-success': 'text-danger' %>"> <%= property.publish %></td>
       <td >

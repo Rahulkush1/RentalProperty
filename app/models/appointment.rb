@@ -1,8 +1,6 @@
 class Appointment < ApplicationRecord
 	belongs_to :user
 
-	validates :property_id, uniqueness: true
-
 	enum status: {
 	    approved: 1,
 	    rejected: 0,

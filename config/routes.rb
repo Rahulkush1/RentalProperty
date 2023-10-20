@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get "/home", to: "dashboard#index"
+  get "/agent", to: "dashboard#agent"
+  get "/contact", to: "dashboard#contact"
+  get "/properties", to: "dashboard#properties"
+  get "/blog", to: "dashboard#blog"
+  
+  get 'payment/create'
   get 'appointment/index', to: "appointments#index"
   post 'appointment/create'
   put 'appointment/:id', to: "appointment#update" , :as => "update_appointment_status"
@@ -32,7 +39,6 @@ Rails.application.routes.draw do
   get "/filter/flat", to: "rent_properties#Filter_for_flat"
 
   # delete "/property/image/:id", to: "properties#delete_image", :as => "delete_image"
-
   root "home#index"
   
 
@@ -50,7 +56,12 @@ Rails.application.routes.draw do
           delete "/:id" , to: "properties#delete_image_attachment", :as => "delete_image_attachment"
           put "/:publish_status", to: "properties#updatePublish", :as => "update_publish"
         end
+        resources :appointment, :only => [:create, :index, :update, :destroy]
       end
+      # get 'appointment/index', to: "appointments#index"
+      # post 'appointment/create'
+      # put 'appointment/:id', to: "appointment#update" , :as => "update_appointment_status"
+      # delete 'appointment/:id', to: "appointment#destroy"
     end 
   end
 

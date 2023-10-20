@@ -13,7 +13,7 @@ class PropertiesController < ApplicationController
 	def new 
 		@user = User.find(params[:user_id])
 		@property = @user.properties.build
-		@property.flat_details.build
+		@property.build_flat_detail
 	end
 
 	def create 
@@ -26,7 +26,7 @@ class PropertiesController < ApplicationController
 	end
 
 	def edit 
-		@user = current_user
+		@user = User.find(params[:user_id])
 	end
 
 
@@ -61,7 +61,6 @@ class PropertiesController < ApplicationController
     		i.purge
     	end
     	@property.destroy
-
     	redirect_to user_properties_path(@user), status: :see_other
 
     end
@@ -78,7 +77,7 @@ class PropertiesController < ApplicationController
 		if params[:property][:prop_type] != "Flat"
 			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
 		else
-			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, flat_details_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
+			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, flat_detail_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
 		end	
 	end
 
