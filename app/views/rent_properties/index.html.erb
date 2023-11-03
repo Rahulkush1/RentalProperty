@@ -108,7 +108,10 @@
 				<%= render :partial => "rent_properties/grid", locals: {property: @property} %>	
 			</div>
 			<div class="text-center">
-				<%= paginate @property %>
+				<% unless @property.empty? %>
+				  <%= paginate @property, remote: true %>
+				<% end %>
+				
 			</div>
 	
 

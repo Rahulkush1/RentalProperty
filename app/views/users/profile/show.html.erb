@@ -145,17 +145,60 @@
 						  		<%= appointment.status %>
 						  <% end %>
 						  </td>
+						  <% if appointment.status != 'approved' %>
 						  <td>
 						  	<%= link_to "delete","/appointment/#{appointment.id}", data:{ turbo_method: :delete,turbo_confirm: "Are you sure?" } %>
 						  </td>
+						  <% end %>
 					    </tr>
 					<% end %>
 					<% end %>
 		  		</tbody>
 		 		
 		<% end %>
+		<% count = 0 %>
 
 	</table>
+	<h3 class="text-center"> Transactions</h3>
+	<table class="table table-striped table-hover table-bordered" >
+		<thead class="table-primary">
+    		<tr>
+		      <th scope="col">S.no</th>
+		      <th scope="col">Email</th>
+		      <th scope="col">Property</th>
+		      <th scope="col">Payment Status</th>
+		      <th scope="col">Total Amount paid </th>
+		      <th scope="col">paid At </th>
+
+
+    		</tr>
+		</thead>
+		<tbody>
+
+			<% @payment_details.each do |payment| %>
+			<% count += 1%>
+			<tr>
+				<th scope="row"><%= count %></th>
+				<td>	
+					<%= User.find(payment.user_id).email %>
+				</td>
+
+				<td> <%= link_to "#{Property.find(payment.property_id).name }",rent_property_path(payment.property_id) %></td>
+				<% if payment.payment_status == true %>
+					<td class="text-success"> paid </td>
+				<% else %>
+					<td class="text-danger"> unpaid </td>
+				<% end %>
+
+				<td> <%= number_to_currency(payment.total_amount/100,:unit => '₹') %> </td>
+				<td> <%= payment.created_at %> </td>
+
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+
+	
 </div>		
 </div>
 

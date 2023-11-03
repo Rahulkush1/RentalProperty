@@ -1,9 +1,9 @@
 class RentPropertiesController < ApplicationController
 
 	def index 
-		@property = Property.page(params[:page]).where(publish: 1)
-		# @property = Property.all
+		@property = Property.where(publish: 1).page(params[:page])
 
+		# @property = Property.all
 
 		if params[:sort_option] == "low_to_high"
 			

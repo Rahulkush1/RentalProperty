@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_064900) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -102,6 +102,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_064900) do
     t.index ["property_id"], name: "index_flat_details_on_property_id"
   end
 
+  create_table "payment_details", force: :cascade do |t|
+    t.string "payment_id"
+    t.integer "user_id"
+    t.integer "property_id"
+    t.boolean "payment_status", default: false
+    t.integer "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pg_details", force: :cascade do |t|
     t.string "available_for"
     t.datetime "created_at", null: false
@@ -117,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_064900) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.integer "publish", default: 0
+    t.boolean "is_paid", default: false
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
@@ -165,6 +176,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_064900) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.string "stripe_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

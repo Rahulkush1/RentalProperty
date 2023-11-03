@@ -83,7 +83,7 @@ class Api::V1::PropertiesController < ApplicationController
 	protected
 
 	def property_params	
-			binding.pry	
+		binding.pry	
 		params.require(:property).permit(:name, :price,:status, :publish, flat_detail_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country])
 	end
 end

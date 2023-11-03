@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+	filter :first_name
 	index do
 	    selectable_column
 	    id_column

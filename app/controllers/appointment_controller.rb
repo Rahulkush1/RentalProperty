@@ -6,10 +6,10 @@ class AppointmentController < ApplicationController
   end
 
   def create
- 
+ binding.pry
     @appointment = current_user.appointments.new(appointment_params)
     if @appointment.save
-      AppointmentMailer.appointment_mail(@appointment).deliver_now
+      # AppointmentMailer.appointment_mail(@appointment).deliver_now
       redirect_to root_path
     else
 

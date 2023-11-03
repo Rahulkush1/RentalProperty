@@ -7,8 +7,7 @@ import "jquery"
 import "popper"
 
 import "bootstrap"
-
-
+	
 
 var myElement = document.querySelector('#property_prop_type');
 

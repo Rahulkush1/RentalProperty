@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  
   rolify
   after_create :assign_default_role
   # Include default devise modules. Others available are:
@@ -8,6 +9,7 @@ class User < ApplicationRecord
   has_many :properties, dependent: :destroy
   has_one :address, as: :addressable
   has_many :appointments, dependent: :destroy
+  has_many :payment_details, dependent: :destroy
   accepts_nested_attributes_for :roles, allow_destroy: true
 
 
@@ -22,6 +24,15 @@ class User < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["address", "properties", "roles", "appointments"]
+  end
+
+  after_create do
+    customer = Stripe::Customer.create({
+      name: self.first_name + " " + self.last_name,
+      phone: self.contact_no, 
+      email: self.email
+    })
+    # binding.pry
   end
 
 

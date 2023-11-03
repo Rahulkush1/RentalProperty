@@ -62,7 +62,6 @@ class PropertiesController < ApplicationController
     	end
     	@property.destroy
     	redirect_to user_properties_path(@user), status: :see_other
-
     end
 
     def delete_image_attachment
