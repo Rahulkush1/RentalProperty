@@ -6,43 +6,22 @@
     
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
- 
-    <%#= stylesheet_link_tag "https://fonts.googleapis.com", "data-turbo-track": "reload" %>
-
-    <%#= stylesheet_link_tag "https://fonts.gstatic.com", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  
-   
-  
-    <%#= javascript_pack_tag "application", 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
-    <%= javascript_include_tag "/controllers/application", 'data-turbo-track': 'reload' %>
-
-
-
-    
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
   </head>
 
   <body>
-    
-
     <%= yield %>
     <%= notice %>
     <%= alert %>
   </body>
   <script type="text/javascript">
 
-    
-  var modal = document.querySelector('.apppointment_modal')
-  // console.log(modal) 
-
   function modal_click(e){
-    
-    
     value = e.id
     length = value.length
     id = value.split('_')[1]
@@ -57,7 +36,6 @@
   }
 
     $(document).ready(function(){
-
       var swiper = new Swiper('.swiper', {
       slidesPerView: 3,
       direction: getDirection(),

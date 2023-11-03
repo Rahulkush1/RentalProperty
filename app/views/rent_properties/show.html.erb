@@ -122,18 +122,26 @@
 				<% end %>
 			</span>
 		</div>
+
 		<div class="mb-3 d-flex justify-content-center ">
 			<% if user_signed_in? %>
+				<% if @property.is_paid != true %>
 				<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
 				<% if appointment != nil %>
 					<% if appointment.visit_status == 'visited' %>
-						<%= link_to "Advance Book ","",class: "btn btn-outline-primary" %>
+
+						<%= button_to "Advance Book ",payment_create_path,params: {:property_id => @property.id},data: { method: :post,turbo: false},remote: true,class: "btn btn-outline-primary btn-lg" %>
 					<% end %>
 				<% else %>
+
 					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Schedule Visit
 					</button>
 				<% end %>
+				<% else %>
+					<button class="btn btn-secondary btn-lg">Paid</button>
+				<% end %>
+
 			<% end %>
 <!-- 			<%# else %>
 					<button type="button" id="modal_<%#= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -141,7 +149,7 @@
 					</button>
 			<%# end %> -->
 
-		<!-- 	<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		<!-- 	<button type="button" id="modal_<%#= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Schedule Visit
 			</button> -->
 

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payment_id: MyString
+  user_id: 1
+  property_id: 1
+  payment_status: false
+
+two:
+  payment_id: MyString
+  user_id: 1
+  property_id: 1
+  payment_status: false

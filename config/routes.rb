@@ -4,8 +4,13 @@ Rails.application.routes.draw do
   get "/contact", to: "dashboard#contact"
   get "/properties", to: "dashboard#properties"
   get "/blog", to: "dashboard#blog"
-  
-  get 'payment/create'
+
+  # Payment Routes
+  post 'checkout/create' => 'payment#create', as: "payment_create"
+  get 'checkout/success' => 'payment#success', as: "payment_success"
+  post "/webhooks/create" => 'webhooks#create'
+
+
   get 'appointment/index', to: "appointments#index"
   post 'appointment/create'
   put 'appointment/:id', to: "appointment#update" , :as => "update_appointment_status"
@@ -25,6 +30,7 @@ Rails.application.routes.draw do
     get '/page/:page', action: :index, on: :collection,:as => "page"
   end
   resources :sub_admin_properties, :only => [ :index, :show]
+  resources :payment, :only => [:new, :create]
 
   
 
@@ -58,10 +64,6 @@ Rails.application.routes.draw do
         end
         resources :appointment, :only => [:create, :index, :update, :destroy]
       end
-      # get 'appointment/index', to: "appointments#index"
-      # post 'appointment/create'
-      # put 'appointment/:id', to: "appointment#update" , :as => "update_appointment_status"
-      # delete 'appointment/:id', to: "appointment#destroy"
     end 
   end
 

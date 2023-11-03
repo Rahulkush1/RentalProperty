@@ -1,4 +1,5 @@
 class Api::V1::Users::ProfileController < ApplicationController
+
 	before_action :authenticate_user! 
 	def show 
 		if params[:id].to_i == current_user.id

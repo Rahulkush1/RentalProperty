@@ -1,0 +1,54 @@
+
+<div style="text-align: center; padding: 50px;" class="paymet_div" onLoad="setTimeout('delayer()', 5000)">
+    <h1>Payment Successful</h1>
+    <p>Thank you for your payment. Your transaction was successful.</p>
+    <p>Order ID: 12345</p> <!-- Replace with your order ID or any relevant information -->
+    <p>Amount Paid: <%= number_to_currency(@checkout_session.amount_total/100,:unit=> '₹ ') %></p> 
+
+</div>
+
+
+<style type="text/css">
+.paymet_div {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+
+.paymet_div {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the heading */
+.paymet_div > h1 {
+    color: #007bff; /* Blue color, you can change this to your preferred color */
+}
+
+/* Style the paragraphs */
+.paymet_div > p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+
+.paymet_div > * {
+    margin: 10px 0;
+}
+</style>
+
+<script type="text/javascript">
+    function delayer(){
+        console.log(window.location = `http://localhost:3000/rent_property/${@checkout_session.metadata.property_id}`)
+        window.location = `http://localhost:3000/rent_property/${@checkout_session.metadata.property_id}`
+    }
+
+</script>

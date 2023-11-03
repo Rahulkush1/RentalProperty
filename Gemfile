@@ -82,5 +82,9 @@ gem "font-awesome-sass", "~> 6.4.2"
 gem "font-awesome-rails"
 gem 'kaminari'
 gem 'stripe'
+gem 'sinatra'
+gem 'jwt'
+gem 'bcrypt'
+
 
 
