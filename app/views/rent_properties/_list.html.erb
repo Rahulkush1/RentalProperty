@@ -1,6 +1,6 @@
 <div class="">
+  <!-- <a href="<%#= rent_property_path(property.id) %>" class="text-dark"> -->
 	<div>
-		<% @property.each do |property| %>
 		<div class="card mb-3 m-auto" style="max-width: 80rem;">
   			<div class="row g-4">
 			
@@ -12,6 +12,13 @@
       				<div class="card-body">
         				<h5 class="card-title"><%= property.name %></h5>
         				<p class="card-text"><%= property.prop_type %></p>
+                <% if property.prop_type == 'Flat' %>
+                  <% if property.flat_detail.present? %>
+                    <p class="card-text "> Flat Type : <%= (property.flat_detail.flat_type).titleize %></p>
+                  <% end %>
+                <% end %>
+
+
         				<p class="card-text"><%= number_to_currency(property.price, :unit => "₹ ")%></p>
         				<div class="d-flex ">
     						<%= link_to "See Details",rent_property_path(property.id) ,class: "btn btn-primary me-3" %>
@@ -27,8 +34,9 @@
   			
   			</div>
 		</div>
-		<% end %>
+
 	</div>
+  <!-- </a> -->
 </div>
 
 

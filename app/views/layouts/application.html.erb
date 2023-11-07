@@ -6,20 +6,36 @@
     
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link href="http://cdn.syncfusion.com/js/web/flat-azure/ej.web.all-latest.min.css" rel="stylesheet" />
     <%= javascript_importmap_tags %>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-   easing/1.3/jquery.easing.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.js"></script>
+    <!--contains the necessary scripts to render all the web components-->
+    <script src="http://cdn.syncfusion.com/js/web/ej.web.all-latest.min.js"></script>
+
   </head>
 
   <body>
-    <%= yield %>
-    <%= notice %>
-    <%= alert %>
+        <div class="toaster">
+            <%= notice %>
+            <%= alert %>
+        </div>
+     <%= yield %>
   </body>
   <script type="text/javascript">
+
+        $(function () {
+             let val =  $(".exactRating").value
+            $(".exactRating").ejRating({ precision: ej.Rating.Precision.Exact, value: val ,readOnly:true});
+        });
+
 
   function modal_click(e){
     value = e.id
@@ -28,11 +44,7 @@
     document.querySelector('.modal-body').innerHTML = "<%= escape_javascript render :partial => "appointment/new" %>"
     
     var property_id = document.querySelector('#appointment_property_id')
-    property_id.value = `${id}`
-
-   
-
-   
+    property_id.value = `${id}`  
   }
 
     $(document).ready(function(){

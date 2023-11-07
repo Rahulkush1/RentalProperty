@@ -28,7 +28,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
-    if user.has_role?(:owner) or user.has_role?(:broker)
+    if user.has_role?(:owner) or user.has_role?(:broker) 
       can :manage, Property
     else
       # can :read, Property 

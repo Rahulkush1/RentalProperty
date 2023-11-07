@@ -82,6 +82,13 @@
 			<span class="properties_content"> <%= @property.prop_type %> </span>
 		</div>
 		<div class="mb-3">
+			<% if @property.prop_type == 'Flat' %>
+						<% if @property.flat_detail.present? %>
+							<p class="fs-3"> Flat Type : <%= (@property.flat_detail.flat_type).titleize %></p>
+						<% end %>
+			<% end %>
+		</div>
+		<div class="mb-3">
 			<h4>Configuration </h4>
 			<div class="card" style="max-width: 40rem;">
 				<div class="card-body"></div>
@@ -124,41 +131,37 @@
 		</div>
 
 		<div class="mb-3 d-flex justify-content-center ">
-			<% if user_signed_in? %>
+
 				<% if @property.is_paid != true %>
-				<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
-				<% if appointment != nil %>
-					<% if appointment.visit_status == 'visited' %>
-
-						<%= button_to "Advance Book ",payment_create_path,params: {:property_id => @property.id},data: { method: :post,turbo: false},remote: true,class: "btn btn-outline-primary btn-lg" %>
+					<% if user_signed_in? %>
+						<% appointment = current_user.appointments.find_by(property_id: @property.id) %>
 					<% end %>
-				<% else %>
+					<% if appointment != nil %>
+							<% if appointment.visit_status == 'visited' %>
 
-					<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						Schedule Visit
-					</button>
-				<% end %>
+								<%= button_to "Advance Book ",payment_create_path,params: {:property_id => @property.id},data: { method: :post,turbo: false},remote: true,class: "btn btn-outline-primary btn-lg" %>
+							<% end %>
+					<% else %>
+
+						<button type="button" id="modal_<%= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							Schedule Visit
+						</button>
+					<% end %>
 				<% else %>
 					<button class="btn btn-secondary btn-lg">Paid</button>
 				<% end %>
-
-			<% end %>
-<!-- 			<%# else %>
-					<button type="button" id="modal_<%#= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						Schedule Visit
-					</button>
-			<%# end %> -->
-
-		<!-- 	<button type="button" id="modal_<%#= @property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				Schedule Visit
-			</button> -->
-
-			<%# end %>
 			<%= link_to " Contact #{@user_role}",sub_admin_property_path(@property.user_id) ,class: "btn btn-outline-success btn-lg mx-3" %>
 
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
 	
 
 <!-- Modal -->

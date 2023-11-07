@@ -9,27 +9,40 @@ import "popper"
 import "bootstrap"
 	
 
-var myElement = document.querySelector('#property_prop_type');
+	var myElement = document.querySelector('#property_prop_type');
 
-function handle_change(e){
-	console.log(myElement)
+	function handle_change(e){
 
-if (myElement.value == 'Flat'){	
-	document.querySelector(".flat_type").style.display = "block"
-	document.querySelector(".flat_available_for").style.display = "block"
+		if (e.target.value == 'Flat'){	
+			document.querySelector(".flat_type").style.display = "block"
+			document.querySelector(".pg_detail").style.display = "none"
+			document.querySelector(".room_detail").style.display = "none"
 
-}
-else{
-	document.querySelector(".flat_type").style.display = "none"
-	document.querySelector(".flat_available_for").style.display = "none"
+		}
+		else if(e.target.value == 'PG'){
 
-}
-}
+			console.log(document.querySelector(".pg_detail"))
+			document.querySelector(".pg_detail").style.display = "block"
+			document.querySelector(".flat_type").style.display = "none"
+			document.querySelector(".room_detail").style.display = "none"
+		}
+		else if (e.target.value == 'Room'){
+			document.querySelector(".room_detail").style.display = "block"
+			document.querySelector(".pg_detail").style.display = "none"
+			document.querySelector(".flat_type").style.display = "none"
+		}
+		else{
+			document.querySelector(".room_detail").style.display = "none"
+			document.querySelector(".pg_detail").style.display = "none"
+			document.querySelector(".flat_type").style.display = "none"
+	}	
+	}
+	myElement.addEventListener('change',(e)=>{
+		handle_change(e);
+	})
 
-myElement.addEventListener('change',()=>{
 
-	handle_change();
-})
+	
 
 
 

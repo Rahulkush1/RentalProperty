@@ -1,28 +1,16 @@
-<h2> Search Result</h2>
+<%= render "home/navbar" %>
+
+<div class=" container">
+<h2 class="my-4"> Search Result</h2>
 	<ul>
 
 		<% if @property.present? %>
-		<h3> properties Found <%= @property.all.count %></h3>
-		<% @property.all.each do |property| %>
-			<li>
-				<p>Name: <%= property.name %></p>
-				<p>Status: <%= property.status %></p>
-				<p>Price: <%= property.price %></p>
-				<p>Property Type: <%= property.prop_type %></p>
-				<% if property.flat_type != nil %>
-					<p>Flat Type: <%= property.flat_type %></p>
-				<% end %>
-				<p>Amenities : 
-					[<% property.amenities.each do |amenity| %>
-						<%= amenity.title %>,
-					 <% end %>]
-				</p>
-				
-				<%#= link_to "See Details",rent_property_path(property.id) %>
-			
-			</li>
-		<% end %>
+		<h3 class="text-center"> Properties Found : <%= @property.all.count %></h3>
+			<%= render "rent_properties/list" %>
 		<% else %>
 			<h3 class="text-center">  Property Not Found </h3>
 		<% end %>
 	</ul>
+</div>
+
+<%= render "home/footer" %>

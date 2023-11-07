@@ -85,6 +85,7 @@ gem 'stripe'
 gem 'sinatra'
 gem 'jwt'
 gem 'bcrypt'
+gem 'ratyrate'
 
 
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reviews/index'
+  resources :reviews, :only => [:create, :index, :edit, :update]
   get "/home", to: "dashboard#index"
   get "/agent", to: "dashboard#agent"
   get "/contact", to: "dashboard#contact"
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
   resources :rent_properties, :only => [ :index, :show] do
     get '/page/:page', action: :index, on: :collection,:as => "page"
   end
-  resources :sub_admin_properties, :only => [ :index, :show]
+  resources :sub_admin_properties, :only => [ :index, :show] 
   resources :payment, :only => [:new, :create]
 
   
