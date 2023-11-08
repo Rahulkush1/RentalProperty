@@ -91,15 +91,21 @@
 		<div class="mb-3">
 			<h4>Configuration </h4>
 			<div class="card" style="max-width: 40rem;">
-				<div class="card-body"></div>
+				<div class="card-body">
+					<p>				
+						<span class="fs-4">Area</span>
+						<small class="text-secondary">in sq.ft</small> 
+					</p>
+				</div>
 			</div>
 		</div>
 		<div class="mb-3">
-			<span class="fs-4">Area</span>
-			<small class="text-secondary">in sq.ft</small> 
+			<span class="fs-4">Available for : </span>
+			<span class="properties_content"> <%= @property.available_for %> </span>
 		</div>
 		<div class="mb-3">
-			<h4>Available for</h4>
+			<span class="fs-4">Available from : </span>
+			<span class="properties_content"> <%= @property.available_from %> </span>
 		</div>
 		<div class="mb-3">
 			<h4>Address</h4>

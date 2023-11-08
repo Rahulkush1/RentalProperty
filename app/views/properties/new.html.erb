@@ -162,36 +162,36 @@
 	document.querySelector('#property_flat_type').classList.add('form-select')
 	
 
-	var myElement = document.querySelector('#property_prop_type');
+	// var myElement = document.querySelector('#property_prop_type');
 
-		console.log(myElement )
-	function handle_change(e){
-		if (e.target.value == 'Flat'){	
-			document.querySelector(".flat_type").style.display = "block"
-			document.querySelector(".pg_detail").style.display = "none"
-			document.querySelector(".room_detail").style.display = "none"
+	// 	console.log(myElement )
+	// function handle_change(e){
+	// 	if (e.target.value == 'Flat'){	
+	// 		document.querySelector(".flat_type").style.display = "block"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".room_detail").style.display = "none"
 
-		}
-		else if(e.target.value == 'PG'){
-			alert('hello')
-			document.querySelector(".pg_detail").style.display = "block"
-			document.querySelector(".flat_type").style.display = "none"
-			document.querySelector(".room_detail").style.display = "none"
-		}
-		else if (e.target.value == 'Room'){
-			document.querySelector(".room_detail").style.display = "block"
-			document.querySelector(".pg_detail").style.display = "none"
-			document.querySelector(".flat_type").style.display = "none"
-		}
-		else{
-			document.querySelector(".room_detail").style.display = "none"
-			document.querySelector(".pg_detail").style.display = "none"
-			document.querySelector(".flat_type").style.display = "none"
-	}	
-	}
-	myElement.addEventListener('change',(e)=>{
-		handle_change(e);
-	})
+	// 	}
+	// 	else if(e.target.value == 'PG'){
+	// 		alert('hello')
+	// 		document.querySelector(".pg_detail").style.display = "block"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// 		document.querySelector(".room_detail").style.display = "none"
+	// 	}
+	// 	else if (e.target.value == 'Room'){
+	// 		document.querySelector(".room_detail").style.display = "block"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// 	}
+	// 	else{
+	// 		document.querySelector(".room_detail").style.display = "none"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// }	
+	// }
+	// myElement.addEventListener('change',(e)=>{
+	// 	handle_change(e);
+	// })
 	
 	
 

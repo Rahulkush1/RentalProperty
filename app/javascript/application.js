@@ -41,6 +41,11 @@ import "bootstrap"
 		handle_change(e);
 	})
 
+        // $(function () {
+        //      let val =  $(".exactRating").value
+        //     $(".exactRating").ejRating({ precision: ej.Rating.Precision.Exact, value: val ,readOnly:true});
+        // });
+
 
 	
 

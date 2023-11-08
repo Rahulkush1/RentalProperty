@@ -6,7 +6,9 @@
 
 		<% if @property.present? %>
 		<h3 class="text-center"> Properties Found : <%= @property.all.count %></h3>
-			<%= render "rent_properties/list" %>
+		<% @property.each do |property| %>
+			<%= render :partial => "rent_properties/list", locals: {property: property} %>	
+		<% end %>
 		<% else %>
 			<h3 class="text-center">  Property Not Found </h3>
 		<% end %>

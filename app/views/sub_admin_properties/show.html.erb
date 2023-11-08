@@ -22,12 +22,14 @@
 <div>
 
 	<h4> Reviews </h4>
-	<h5> Average rating: <input id="exactRating" type="text" class="rating exactRating" value="<%= @avg_rating %>" /></h5>
+	<h5> Average rating: <%= @avg_rating %>
+		<!-- <input id="exactRating" type="text" class="rating exactRating" value="<%#= @avg_rating %>" /></h5> -->
 	<% @reviews.each do |review| %>
 		<div class=" shadow_review mx-3 my-4">	
 			<p class="fs-5 text-dark"> Email: <%= User.find(review.reviewable.id).email   %></p>
 			<p class="fs-5 text-dark">
-			 Rating: <input id="exactRating" type="text" class="rating exactRating" value="<%= review.rating %>" />
+			 Rating: <%= review.rating %>
+			 <!-- <input id="exactRating" type="text" class="rating exactRating" value="<%#= review.rating %>" /> -->
 			</p>
 			<p class="fs-5 text-dark"> Review: <%= review.body  %></p>
 			<!-- <hr> -->

@@ -31,10 +31,10 @@
   </body>
   <script type="text/javascript">
 
-        $(function () {
-             let val =  $(".exactRating").value
-            $(".exactRating").ejRating({ precision: ej.Rating.Precision.Exact, value: val ,readOnly:true});
-        });
+        // $(function () {
+        //      let val =  $(".exactRating").value
+        //     $(".exactRating").ejRating({ precision: ej.Rating.Precision.Exact, value: val ,readOnly:true});
+        // });
 
 
   function modal_click(e){
@@ -48,6 +48,8 @@
   }
 
     $(document).ready(function(){
+
+
       var swiper = new Swiper('.swiper', {
       slidesPerView: 3,
       direction: getDirection(),
@@ -96,8 +98,7 @@
         }
       }
     });
- 
-    });
+
 
   </script>
 </html>

@@ -1,11 +1,10 @@
 class Property < ApplicationRecord
 	resourcify
-	validates :name,:price,:prop_type, presence: true
+	validates :name,:price,:prop_type,:available_for, :available_from , presence: true
 	has_and_belongs_to_many :amenities, :join_table => :amenities_properties, dependent: :destroy
 	has_one :address, as: :addressable,dependent: :destroy
 	belongs_to :user
 	has_many_attached :images
-	has_many :reviews,as: :reviewable, dependent: :destroy
 	has_one :flat_detail, dependent: :destroy
 	has_one :pg_detail, dependent: :destroy
 	has_one :room_detail, dependent: :destroy
