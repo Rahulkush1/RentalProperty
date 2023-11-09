@@ -1,25 +1,25 @@
+<a href="<%= rent_property_path(property.id) %>" class="text-dark">
 <div class="card m-auto" style="width: 18rem;">
-  	<img src="<%= url_for(property.images[0]) %>" class="card-img-top" alt="...">
+  	<img src="<%= url_for(property.images[0]) %>" class="card-img-top img-fluid" alt="..." >
   		<div class="card-body">
     		<h5 class="card-title"><%= property.name %></h5>
     			<p class="card-text">
     				Status : <%= property.status %>	
     			</p>
     			<p class="card-text">
-    				Property Type  : <%= property.prop_type %>   
-    				Property Type  : <%= property.id %>   				
-
+    				Property Type  : <%= property.prop_type %>      				  
     			</p>
-    			<div class="d-flex justify-content-between">
-    				<%= link_to "See Details",rent_property_path(property.id) ,class: "btn btn-primary" %>
+          <div class="d-flex justify-content-between my-3">
+              <%= link_to "See Details",rent_property_path(property.id) ,class: "btn btn-primary" %>
 
-    				<button type="button" id="modal_<%=property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				  		Schedule Visit
-					</button>
-    				<%#= render :partial => "model", locals: {property_id: property.id} %>
-    			</div>
+              <button type="button" id="modal_<%=property.id%>" onclick="modal_click(this)" class="btn btn-outline-primary apppointment_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Schedule Visit
+            </button>
+          </div>
     	</div>
 </div>
+</a>
+
 
 
 <!-- Modal -->

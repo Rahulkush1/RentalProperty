@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_121542) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -94,7 +94,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
 
   create_table "flat_details", force: :cascade do |t|
     t.string "area"
-    t.string "available_for"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "property_id", null: false
@@ -113,9 +112,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
   end
 
   create_table "pg_details", force: :cascade do |t|
-    t.string "available_for"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sharing_type"
+    t.boolean "food_facility"
+    t.integer "property_id", null: false
+    t.index ["property_id"], name: "index_pg_details_on_property_id"
   end
 
   create_table "properties", force: :cascade do |t|
@@ -128,7 +130,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
     t.integer "user_id", null: false
     t.integer "publish", default: 0
     t.boolean "is_paid", default: false
+    t.text "description"
+    t.integer "available_for"
+    t.datetime "available_from"
     t.index ["user_id"], name: "index_properties_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.float "rating"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "reviewable_type"
+    t.integer "reviewable_id"
+    t.integer "user_id"
+    t.integer "property_id"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -144,9 +161,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
 
   create_table "room_details", force: :cascade do |t|
     t.string "area"
-    t.string "available_for"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "property_id", null: false
+    t.index ["property_id"], name: "index_room_details_on_property_id"
   end
 
   create_table "super_admins", force: :cascade do |t|
@@ -194,5 +212,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_061734) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "users"
   add_foreign_key "flat_details", "properties"
+  add_foreign_key "pg_details", "properties"
   add_foreign_key "properties", "users"
+  add_foreign_key "room_details", "properties"
 end

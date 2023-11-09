@@ -1,13 +1,19 @@
 class Property < ApplicationRecord
 	resourcify
+	validates :name,:price,:prop_type,:available_for, :available_from , presence: true
 	has_and_belongs_to_many :amenities, :join_table => :amenities_properties, dependent: :destroy
 	has_one :address, as: :addressable,dependent: :destroy
 	belongs_to :user
 	has_many_attached :images
 	has_one :flat_detail, dependent: :destroy
+	has_one :pg_detail, dependent: :destroy
+	has_one :room_detail, dependent: :destroy
 	accepts_nested_attributes_for :flat_detail, allow_destroy: true
+	accepts_nested_attributes_for :pg_detail, allow_destroy: true
+	accepts_nested_attributes_for :room_detail, allow_destroy: true
 	accepts_nested_attributes_for :amenities, allow_destroy: true
 	accepts_nested_attributes_for :address, allow_destroy: true
+
 
 	scope :filter_by_name, -> (name) {where(name: name)}
 
@@ -18,8 +24,7 @@ class Property < ApplicationRecord
 
 	enum status: {
 	    available: 0,
-	    sold: 1,
-	    pending: 2 
+	    sold: 1
   	}
 
   	enum prop_type: {
@@ -28,6 +33,8 @@ class Property < ApplicationRecord
 	    PG: 1,
 	    Room: 2
   	}
+
+  	enum available_for: ["Family","Bachelor","Student"]
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "id", "name", "price", "prop_type", "publish", "status", "updated_at", "user_id"]
   end

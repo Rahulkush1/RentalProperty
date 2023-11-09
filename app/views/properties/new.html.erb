@@ -18,6 +18,7 @@
 			<%= f.number_field :price, class: "form-control" %>
 		</div>
 
+
 		<div class="mb-3">
 		<%= f.label :prop_type, class: "form-label" %>
 		<%= f.select :prop_type, Property.prop_types.keys ,selected: "Select",include_blank: false,disabled: Property.prop_types.keys[0] %>	
@@ -28,15 +29,49 @@
 				
 				<%= f.fields_for :flat_detail do |flat_detail| %>
 					<%= flat_detail.label :flat_type, class: "form-label"  %>
-					<%= flat_detail.select :flat_type, FlatDetail.flat_types.keys ,selected: "Select",include_blank: false,disabled: FlatDetail.flat_types.keys[0]  %>	
+					<%= flat_detail.select :flat_type, FlatDetail.flat_types.keys ,selected: "Select",include_blank: false,disabled: FlatDetail.flat_types.keys[0]  %>
+				<% end %>	
+			</div>
+		</div>	
+		<div class="mb-3">
+			<div class="pg_detail" style="display: none;">
+				<%= f.fields_for :pg_detail do |pg_detail| %>
+					<div class="mb-3">
+						
+					<%= pg_detail.label :sharing_type, class: "form-label"  %>
+					<%= pg_detail.select :sharing_type, PgDetail.sharing_types.keys ,selected: "Select",include_blank: false,disabled: PgDetail.sharing_types.keys[0]  %>
+					</div>
+					<div class="mb-3">		
+					<%= pg_detail.label :food_facility, class: "form-label" %>
+					<%= pg_detail.radio_button :food_facility, value:"Yes" %>
+					<%= pg_detail.label :food_facility_yes, " Yes" %>
+
+					<%= pg_detail.radio_button :food_facility, value: "No" %>
+					<%= pg_detail.label :food_facility_no, "No" %>
+					</div>
+
+
+				<% end %>	
 			</div>
 		</div>
+
 		<div class="mb-3">
-			<div class="flat_available_for" style="display: none;" >
-					<%= flat_detail.label :available_for, class: "form-label"  %>
-					<%= flat_detail.select :available_for, ["Family","Bachelor","Student"],selected: "Select",include_blank: false  %>
-				<% end %>
+			<div class="room_detail" style="display: none;">
+				<%= f.fields_for :room_detail do |room_detail| %>
+					<%= room_detail.label :area, class: "form-label" %>
+					<%= room_detail.text_field :area, class: "form-control" %>
+				<% end %>	
 			</div>
+		</div>
+		
+		<div class="mb-3">
+				<%= f.label :available_for, class: "form-label"  %>
+				<%= f.select :available_for, Property.available_fors.keys ,selected: "Select",include_blank: false  %>
+		</div>
+
+		<div class="mb-3">
+			<%= f.label :available_from, class: "form-label"  %>
+			<%= f.date_field :available_from,:min => Date.today  %>
 		</div>
 
 		<div class="mb-3 amenity-checkbox">
@@ -92,7 +127,6 @@
 
 	var ele2 = document.querySelector('#property_amenity_ids_7')
 	var label2= document.querySelector('#property_amenity_ids_6').labels
-	console.log(label2[0].innerHTML )
 	function amenityHandle(e){
 		if(e.target.checked){
 			document.querySelector('#property_amenity_ids_7').style.display = "none";
@@ -121,10 +155,43 @@
 	})
 	ele2.addEventListener('change',(e)=>{
 		amenityHandle2(e);
-
 	})
 	document.querySelector('#property_prop_type').classList.add('form-select')
+	document.querySelector('#property_flat_detail_attributes_flat_type').classList.add('form-select')
+	document.querySelector('#property_pg_detail_attributes_sharing_type').classList.add('form-select')
 	document.querySelector('#property_flat_type').classList.add('form-select')
+	
+
+	// var myElement = document.querySelector('#property_prop_type');
+
+	// 	console.log(myElement )
+	// function handle_change(e){
+	// 	if (e.target.value == 'Flat'){	
+	// 		document.querySelector(".flat_type").style.display = "block"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".room_detail").style.display = "none"
+
+	// 	}
+	// 	else if(e.target.value == 'PG'){
+	// 		alert('hello')
+	// 		document.querySelector(".pg_detail").style.display = "block"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// 		document.querySelector(".room_detail").style.display = "none"
+	// 	}
+	// 	else if (e.target.value == 'Room'){
+	// 		document.querySelector(".room_detail").style.display = "block"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// 	}
+	// 	else{
+	// 		document.querySelector(".room_detail").style.display = "none"
+	// 		document.querySelector(".pg_detail").style.display = "none"
+	// 		document.querySelector(".flat_type").style.display = "none"
+	// }	
+	// }
+	// myElement.addEventListener('change',(e)=>{
+	// 	handle_change(e);
+	// })
 	
 	
 

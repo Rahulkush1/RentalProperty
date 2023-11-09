@@ -26,9 +26,9 @@
 				<p class="fs-3">Property Type :<span class="text-primary mx-3 fs-4"><%= @property.prop_type %></span> </p>
 			</div>
 			<div class="mb-3">
-				<% if @property.prop_type != 'Flat' %>
+				<% if @property.prop_type == 'Flat' %>
 					<% if @property.flat_detail.present? %>
-						<p>Name : <%= @property.flat_detail.flat_type %></p>
+						<p class="fs-3"> Flat Type : <%= (@property.flat_detail.flat_type).titleize %></p>
 					<% end %>
 				<% end %>
 				<p class="fs-3">Amenities : 
@@ -69,6 +69,7 @@
 			
 			
 		</div>
+
 		
 		
 		 
@@ -76,9 +77,5 @@
 	</div>
 
 </div>
-
-
-
-
 <%= render "home/footer" %>	
 	
