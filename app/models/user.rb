@@ -2,14 +2,17 @@ class User < ApplicationRecord
   
   rolify
   after_create :assign_default_role
-  # Include default devise modules. Others available are:
+  validates :email,:password, presence: true
+  validates :email, uniqueness: true
+
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :properties, dependent: :destroy
-  has_one :address, as: :addressable
+  has_one :address, as: :addressable, dependent: :destroy
   has_many :appointments, dependent: :destroy
   has_many :payment_details, dependent: :destroy
+  has_many :reviews,as: :reviewable, dependent: :destroy
   accepts_nested_attributes_for :roles, allow_destroy: true
 
 

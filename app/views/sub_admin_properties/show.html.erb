@@ -1,48 +1,79 @@
+
+<%= render "home/navbar" %>
+
 <%  @user.roles.each do |role| %>
 	<% if role.name != "user" %>
 			<% @sub_user = role.name.capitalize %>
 	<% end %>
 <% end %>
-
-<h3>
-	<%= @sub_user %>
-	Details
+<div class="container">
+<h3 class="my-4">
+	<span class="border-bottom"> <%= @sub_user %>
+	Details</span>
 </h3>
 
-<p> Name :  <%= @user.first_name %> <%= @user.last_name %> </p>
+<div class="fs-5 text-secondary">
+	<p> Name :  <%= @user.first_name %> <%= @user.last_name %> </p>
+	<p> Email :  <%= @user.email %> </p>
+	<p> Rating : 4.0 </p>
+	<p> Reviews : Good condition flat </p>
+</div>
+
+<div>
+
+	<h4> Reviews </h4>
+	<h5> Average rating: <%= @avg_rating %>
+		<!-- <input id="exactRating" type="text" class="rating exactRating" value="<%#= @avg_rating %>" /></h5> -->
+	<% @reviews.each do |review| %>
+		<div class=" shadow_review mx-3 my-4">	
+			<p class="fs-5 text-dark"> Email: <%= User.find(review.reviewable.id).email   %></p>
+			<p class="fs-5 text-dark">
+			 Rating: <%= review.rating %>
+			 <!-- <input id="exactRating" type="text" class="rating exactRating" value="<%#= review.rating %>" /> -->
+			</p>
+			<p class="fs-5 text-dark"> Review: <%= review.body  %></p>
+			<!-- <hr> -->
+		</div>
+	<% end %>
+</div>
 
 
 
-<p> Rating : 4.0 </p>
-<p> Reviews : Good condition flat </p>
+<div class="review">
+	<% if user_signed_in? %>
+		<% if @reviews.find_by(reviewable_id: current_user.id) %>
+			<%= render :partial => "reviews/edit", locals: {user_id: @user.id , review: @reviews.find_by(reviewable_id: current_user.id) } %>
+		<% else %>
+			<%= render :partial => "reviews/new", locals: {user_id: @user.id }  %>
+		<% end %>
+	<% end %>
+</div>
 
-<h4>Properties </h4>
+
+<h3 class="my-4">
+	<span class="border-bottom"> <%= @sub_user %>
+	Properties</span>
+</h3>
 
 <ul>
+<div class=""> 
 <% @properties.each do |property| %>
-	<li>
-		<p>Property Name :  <%= property.name %></p>
-		<p>Property Status : <%= property.status %></p>
-		<p>Property Type :  <%= property.prop_type %></p>
-		<p> <%= property.flat_type %></p>
-		<% if property.flat_type != nil %>
-			<p>Flat Type: <%= property.flat_type %></p>
-		<% end %>
-		<p>Amenities : 
-			[<% property.amenities.each do |amenity| %>
-				<%= amenity.title %>,
-			<% end %>]
-		</p>
-		<p>Address : 
-						<%= property.address.address %>
-						<%= property.address.street	 %>
-						<%= property.address.city %>
-						<%= property.address.country %>
-
-		</p>
-
-	</li>
-<% end %>
+	<%= render :partial => "rent_properties/list", locals: {property: property} %>	
+<% end %>	
+</div>
 </ul>
+</div>
 
+
+
+<%= render "home/footer" %>
+
+
+<style type="text/css">
+	.shadow_review{
+		border-radius: 20px;
+		padding: 0.5rem 0.5rem;
+		box-shadow: inset 1px 1px 90px 100px whitesmoke;
+			}
+</style>
 

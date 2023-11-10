@@ -50,16 +50,21 @@ class RentPropertiesController < ApplicationController
 
 	def show 
 		@property = Property.find(params[:id])
+		
 	end
 
 	def search
 		# binding.pry
-		 key = "%#{params[:key]}%"
+		 key = "%#{params[:key].downcase}%"
 		 # key = "#{params[:key]}"
 
 		# @property = Property.all
 		if key != "%%"
-			@property = Property.where("name LIKE ? or prop_type LIKE ? or flat_type LIKE ? ",key,prop_type_key(key),flat_type_key(key))
+			if key.downcase == '%bhk%' or key.downcase == '%twobhk%' or key.downcase == '%threebhk%' 
+				@property = Property.joins(:flat_detail).where(flat_detail: { flat_type: flat_type_key(key) }).or(Property.where("name LIKE ? or prop_type LIKE ?",key,prop_type_key(key)))
+			else
+				@property = Property.joins(user: :roles).where( roles: {name: key.tr('%','')})
+			end
 		end
 
 	end
@@ -77,14 +82,15 @@ class RentPropertiesController < ApplicationController
 
 	def flat_type_key(key)
 		if key.downcase == "%bhk%" 
-		 	key = 0
-		elsif key.downcase == '%twobhk%' 
 		 	key = 1
+		elsif key.downcase == '%twobhk%' 
+		 	key = 2
 		elsif key.downcase == '%threebhk%' || key.downcase == '% 3 bhk%' || key.downcase == '% three bhk%'
-		 	key = 2	
+		 	key = 3	
 		end
 		return key 
 	end
+
 
 
 	# def Filter_for_flat

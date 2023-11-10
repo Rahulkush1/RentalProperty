@@ -14,6 +14,10 @@ class PropertiesController < ApplicationController
 		@user = User.find(params[:user_id])
 		@property = @user.properties.build
 		@property.build_flat_detail
+		@property.build_pg_detail
+		@property.build_room_detail
+
+
 	end
 
 	def create 
@@ -73,10 +77,14 @@ class PropertiesController < ApplicationController
 	private
 
 	def property_params
-		if params[:property][:prop_type] != "Flat"
-			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
+		if params[:property][:prop_type] == "Flat" 
+			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, :available_for, :available_from, flat_detail_attributes: [:flat_type, :area], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
+		elsif params[:property][:prop_type] == "PG" 
+			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, :available_for, :available_from, pg_detail_attributes:[:sharing_type, :food_facility], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
+		elsif params[:property][:prop_type] == "Room" 
+			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, :available_for, :available_from, room_detail_attributes:[:area], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
 		else
-			params.require(:property).permit(:name, :price,:prop_type, :status, :publish, flat_detail_attributes: [:flat_type, :area, :available_for], amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
+			params.require(:property).permit(:name, :price,:prop_type, :status, :available_for, :available_from,  :publish, amenity_ids: [], address_attributes: [:address, :street, :city, :country],images: [])
 		end	
 	end
 

@@ -244,6 +244,7 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    ratyrate (1.2.2.alpha)
     rdoc (6.5.0)
       psych (>= 4.0.0)
     regexp_parser (2.8.1)
@@ -334,6 +335,7 @@ DEPENDENCIES
   pry
   puma (~> 5.0)
   rails (~> 7.0.8)
+  ratyrate
   rolify
   sassc-rails
   selenium-webdriver
